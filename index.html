@@ -19,6 +19,8 @@
 			}
 			th, td {
 				text-align: center;
+				padding-top: 15px;
+				padding-bottom: 15px;
 			}
 			img {
 				padding: 0;
@@ -167,10 +169,11 @@
 				let powerIndex = getRandomPowerIndex(weights, powersByGroup);
 				let powers = powersByGroup[powerIndex];
 				let power = getRandomPower(powers);
-				let player = getRandomPlayer(players);
+				let player = getRandomPlayer(players);				
+				let powerIcon = getPowerIcon(powerIndex);
 				
 				let htmlPlayer = "<div style=\"font-size: 50px;font-weight: bold\">" + (powerIndex == 2 ? "" : player) + "</div>";
-				let htmlPowerName = "<div style=\"font-size: 50px;font-weight: bold\">" + power.name + "</div>";
+				let htmlPowerName = "<div style=\"font-size: 50px;font-weight: bold\">" + powerIcon + " " + power.name + "</div>";
 				let htmlPowerText = "<div style=\"font-size: 32px\">" + power.text + "</div>";
 				let htmlPowerImage = "<div><img src=\"" + power.image + "\" /></div>";
 				let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"window.location.reload();\">Randomize</button>";
@@ -197,6 +200,17 @@
 			function getRandomPower(powers)
 			{
 				return powers[Math.floor(Math.random() * powers.length)];
+			}
+			
+			function getPowerIcon(powerIndex)
+			{
+				switch (powerIndex)
+				{
+					case 0: return "\&#9855;";
+					case 1: return "\&#128640;";
+					case 2: return "\&#65533;";
+					default: return "";
+				}
 			}
 			
 			function normalizeWeights(weights)
