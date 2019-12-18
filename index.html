@@ -12,7 +12,7 @@
 				display: block;
 				width: 100%;
 				height: 200px;
-				font-size: 50px;
+				font-size: 64px;
 			}
 			table {
 				width: 100%;
@@ -37,9 +37,9 @@
 			{
 				let weights = 
 				[
-					100,	// handicap
-					100,	// bonus
-					100,	// misc
+					60,		// handicap
+					35,		// bonus
+					5,		// misc
 				];
 			
 				let players = 
@@ -172,9 +172,9 @@
 				let player = getRandomPlayer(players);				
 				let powerIcon = getPowerIcon(powerIndex);
 				
-				let htmlPlayer = "<div style=\"font-size: 50px;font-weight: bold\">" + (powerIndex == 2 ? "" : player) + "</div>";
-				let htmlPowerName = "<div style=\"font-size: 50px;font-weight: bold\">" + powerIcon + " " + power.name + "</div>";
-				let htmlPowerText = "<div style=\"font-size: 32px\">" + power.text + "</div>";
+				let htmlPlayer = "<div style=\"font-size: 64px;font-weight: bold\">" + (powerIndex == 2 ? "" : player) + "</div>";
+				let htmlPowerName = "<div style=\"font-size: 64px;font-weight: bold\">" + powerIcon + " " + power.name + "</div>";
+				let htmlPowerText = "<div style=\"font-size: 40px\">" + power.text + "</div>";
 				let htmlPowerImage = "<div><img src=\"" + power.image + "\" /></div>";
 				let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"window.location.reload();\">Randomize</button>";
 				
@@ -194,12 +194,16 @@
 			
 			function getRandomPlayer(players)
 			{
-				return players[Math.floor(Math.random() * players.length)];
+				let value = Math.random();
+				console.log("randomized for player: " + value);
+				return players[Math.floor(value * players.length)];
 			}
 			
 			function getRandomPower(powers)
 			{
-				return powers[Math.floor(Math.random() * powers.length)];
+				let value = Math.random();
+				console.log("randomized for power: " + value);
+				return powers[Math.floor(value * powers.length)];
 			}
 			
 			function getPowerIcon(powerIndex)
@@ -232,6 +236,7 @@
 			{
 				let weightsNormalized = normalizeWeights(weights);
 				let value = Math.random();
+				console.log("randomized for power type: " + value);
 				let rangeStarts = 0;
 				for (i = 0; i < weightsNormalized.length ; i++)
 				{
