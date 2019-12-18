@@ -1,7 +1,27 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>Poker Home Game SPECIAL</title>
+		<style>
+			body {
+				background-color: #cccccc;
+				font-family: "Verdana", Times, serif;
+			}
+			#buttonRefresh {
+				display: block;
+				width: 100%;
+				height: 100px;
+				font-size: 32px;
+			}
+			img {
+				padding: 0;
+				display: block;
+				margin: 0 auto;
+				max-height: 100%;
+				max-width: 100%;
+			}
+		</style>
 	</head>
 	<body>
 		<script>
@@ -85,9 +105,9 @@
 				
 				let htmlPlayer = powerIndex != 2 ? "<h1>" + player + "</h1>" : "";
 				let htmlPowerName = "<h2>" + power.name + "</h2>";
-				let htmlPowerText = "<h3>" + power.text + "</h3>";
+				let htmlPowerText = "<h4>" + power.text + "</h4>";
 				let htmlPowerImage = "<img src=\"" + power.image + "\" />";
-				let htmlButtonRefresh = "<button onClick=\"window.location.reload();\">Refresh Page</button>";
+				let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"window.location.reload();\">Randomize</button>";
 				
 				let table = 
 					"<table>" +
