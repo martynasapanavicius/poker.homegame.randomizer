@@ -172,8 +172,8 @@
 				let player = getRandomPlayer(players);				
 				let powerIcon = getPowerIcon(powerIndex);
 				
-				let htmlPlayer = "<div style=\"font-size: 64px;font-weight: bold\">" + (powerIndex == 2 ? "" : player) + "</div>";
-				let htmlPowerName = "<div style=\"font-size: 64px;font-weight: bold\">" + powerIcon + " " + power.name + "</div>";
+				let htmlPlayer = "<div style=\"font-size: 50px;font-weight: bold\">" + (powerIndex == 2 ? "" : player) + "</div>";
+				let htmlPowerName = "<div style=\"font-size: 50px;font-weight: bold\">" + powerIcon + " " + power.name + "</div>";
 				let htmlPowerText = "<div style=\"font-size: 40px\">" + power.text + "</div>";
 				let htmlPowerImage = "<div><img src=\"" + power.image + "\" /></div>";
 				let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"window.location.reload();\">Randomize</button>";
