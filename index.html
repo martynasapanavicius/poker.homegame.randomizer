@@ -1,0 +1,146 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Poker Home Game SPECIAL</title>
+	</head>
+	<body>
+		<script>
+			function randomize()
+			{
+				let weights = 
+				[
+					100,	// handicap
+					100,	// bonus
+					100,	// misc
+				];
+			
+				let players = 
+				[ 
+					"Player0", 
+					"Player1",
+					"Player2",
+					"Player3",
+					"Player4",
+					"Player5",
+				];
+				
+				let handicaps =
+				[
+					{ 
+						"name" : "Call Station", 
+						"text" : "Hero can only fold, check or call.", 
+						"image" : "handicap_call_station.jpg",
+					},
+					{ 
+						"name" : "Slut", 
+						"text" : "Hero plays with one card face up.", 
+						"image" : "handicap_slut.jpg",
+					},
+				];
+				
+				let bonuses =
+				[
+					{ 
+						"name" : "Deja Vu", 
+						"text" : "Hero can ask to re-deal one streat (flop, turn or river).", 
+						"image" : "bonus_deja_vu.jpg",
+					},
+					{ 
+						"name" : "Research", 
+						"text" : "Hero can ask to re-deal one pocket card (at the beginning of hand). Discarded card is shown.", 
+						"image" : "bonus_research.jpg",
+					},
+				];
+				
+				let miscs =
+				[
+					{ 
+						"name" : "Bomb Pot", 
+						"text" : "Everybody pays X bb. Deal flop. Play!", 
+						"image" : "misc_bomb_pot.jpg",
+					},
+					{ 
+						"name" : "Big Mac", 
+						"text" : "Play two boards. Each board pays half the pot.", 
+						"image" : "misc_big_mac.jpg",
+					},
+					{ 
+						"name" : "Nut Low", 
+						"text" : "Worst hand wins.", 
+						"image" : "misc_nut_low.jpg",
+					},
+				];
+				
+				let powersByGroup = 
+				[
+					handicaps, 
+					bonuses,
+					miscs,
+				];
+				
+				let powerIndex = getRandomPowerIndex(weights, powersByGroup);
+				let powers = powersByGroup[powerIndex];
+				let power = powers[Math.floor(Math.random() * powers.length)];
+				let player = getRandomPlayer(players);
+				
+				let htmlPlayer = powerIndex != 2 ? "<h1>" + player + "</h1>" : "";
+				let htmlPowerName = "<h2>" + power.name + "</h2>";
+				let htmlPowerText = "<h3>" + power.text + "</h3>";
+				let htmlPowerImage = "<img src=\"" + power.image + "\" />";
+				let htmlButtonRefresh = "<button onClick=\"window.location.reload();\">Refresh Page</button>";
+				
+				let table = 
+					"<table>" +
+						"<tr><td>" + htmlButtonRefresh + "</td></tr>" +
+						"<tr><td>" + htmlPlayer + "</td></tr>" +
+						"<tr><td>" + htmlPowerName + "</td></tr>" +
+						"<tr><td>" + htmlPowerText + "</td></tr>" +
+						"<tr><td>" + htmlPowerImage + "</td></tr>" +
+					"</table>";
+				
+				return table;
+			}
+			
+			function getRandomPlayer(players)
+			{
+				return players[Math.floor(Math.random() * players.length)];
+			}
+			
+			function normalizeWeights(weights)
+			{
+				let weightsSum = 0;
+				for (i = 0; i < weights.length ; i++)
+				{
+					weightsSum += weights[i];
+				}
+				let weightsNormalized = new Array(weights.length);
+				for (i = 0; i < weights.length ; i++)
+				{
+					weightsNormalized[i] = weights[i] / weightsSum;
+				}
+				return weightsNormalized;
+			}
+			
+			function getRandomPowerIndex(weights, powersByGroup)
+			{
+				let weightsNormalized = normalizeWeights(weights);
+				let value = Math.random();
+				let rangeStarts = 0;
+				for (i = 0; i < weightsNormalized.length ; i++)
+				{
+					let rangeEnds = rangeStarts + weightsNormalized[i];
+					if (value >= rangeStarts && value < rangeEnds)
+					{
+						return i;
+					}
+					rangeStarts  = rangeEnds;
+				}
+				return -1;
+			}
+			
+			document.body.innerHTML = randomize();
+		</script>
+		<div id="main" />
+		<img id="image" />
+	</body>
+</html>
