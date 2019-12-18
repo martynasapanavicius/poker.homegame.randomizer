@@ -11,8 +11,14 @@
 			#buttonRefresh {
 				display: block;
 				width: 100%;
-				height: 100px;
+				height: 200px;
 				font-size: 32px;
+			}
+			table {
+				width: 100%;
+			}
+			th, td {
+				text-align: center;
 			}
 			img {
 				padding: 0;
@@ -56,19 +62,79 @@
 						"text" : "Hero plays with one card face up.", 
 						"image" : "handicap_slut.jpg",
 					},
+					{ 
+						"name" : "Pirate", 
+						"text" : "Hero cannot look at one of his cards (until river).", 
+						"image" : "handicap_pirate.jpg",
+					},
+					{ 
+						"name" : "Philanthropy", 
+						"text" : "Hero donates X bb to pot.", 
+						"image" : "handicap_philanthropy.jpg",
+					},
+					{ 
+						"name" : "Cargo Ship", 
+						"text" : "Hero must go dark all-in (cap X bb).", 
+						"image" : "handicap_cargo_ship.jpg",
+					},
+					{ 
+						"name" : "Gambler", 
+						"text" : "Hero must (re)straddle bet. If not possible, hero posts equal amount.", 
+						"image" : "handicap_gambler.jpg",
+					},
+					{ 
+						"name" : "Minesweeper", 
+						"text" : "Every street hero rolls a dice, if 1 is rolled - hero folds.", 
+						"image" : "handicap_minesweeper.jpg",
+					},
 				];
 				
 				let bonuses =
 				[
 					{ 
 						"name" : "Deja Vu", 
-						"text" : "Hero can ask to re-deal one streat (flop, turn or river).", 
+						"text" : "Hero can ask to re-deal one street (flop, turn or river).", 
 						"image" : "bonus_deja_vu.jpg",
 					},
 					{ 
 						"name" : "Research", 
-						"text" : "Hero can ask to re-deal one pocket card (at the beginning of hand). Discarded card is shown.", 
+						"text" : "At the beginning of the hand hero can ask to re-deal one pocket card (discarded card is shown).", 
 						"image" : "bonus_research.jpg",
+					},
+					{ 
+						"name" : "Mulligan", 
+						"text" : "Hero can ask to deal him new hand at any time (discarded hand is shown).", 
+						"image" : "bonus_mulligan.jpg",
+					},
+					{ 
+						"name" : "Shenanigans", 
+						"text" : "Hero can swap one card with any opponent at any time.", 
+						"image" : "bonus_shenanigans.jpg",
+					},
+					{ 
+						"name" : "Marathon", 
+						"text" : "Hero can ask to play 6th street (new card + new betting round).", 
+						"image" : "bonus_marathon.jpg",
+					},
+					{ 
+						"name" : "Tax", 
+						"text" : "Each opponent donates X bb to pot.", 
+						"image" : "bonus_tax.jpg",
+					},
+					{ 
+						"name" : "Button", 
+						"text" : "Hero always last to act (each street action starts from the player after hero).", 
+						"image" : "bonus_button.jpg",
+					},
+					{ 
+						"name" : "Dealer's Choice", 
+						"text" : "Hero chooses game (texas, omaha, crazy pineapple, shortdeck, razz, etc.)", 
+						"image" : "bonus_dealers_choice.jpg",
+					},
+					{ 
+						"name" : "Schrödinger's Cat", 
+						"text" : "Only on river and only when heads-up. If hero successfully blufs opponent, he or she can show his hand and collect extra X% from opponent (last hero bet doesn't count). Oponnent can defent by showing worse hand.", 
+						"image" : "bonus_schrodingers_cat.jpg",
 					},
 				];
 				
@@ -100,22 +166,24 @@
 				
 				let powerIndex = getRandomPowerIndex(weights, powersByGroup);
 				let powers = powersByGroup[powerIndex];
-				let power = powers[Math.floor(Math.random() * powers.length)];
+				let power = getRandomPower(powers);
 				let player = getRandomPlayer(players);
 				
-				let htmlPlayer = powerIndex != 2 ? "<h1>" + player + "</h1>" : "";
-				let htmlPowerName = "<h2>" + power.name + "</h2>";
-				let htmlPowerText = "<h4>" + power.text + "</h4>";
+				let htmlPlayer = "<h1>" + (powerIndex == 2 ? "-" : player) + "</h1>";
+				let htmlPowerName = "<h1>" + power.name + "</h1>";
+				let htmlPowerText = "<h2>" + power.text + "</h2>";
 				let htmlPowerImage = "<img src=\"" + power.image + "\" />";
 				let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"window.location.reload();\">Randomize</button>";
 				
 				let table = 
 					"<table>" +
-						"<tr><td>" + htmlButtonRefresh + "</td></tr>" +
-						"<tr><td>" + htmlPlayer + "</td></tr>" +
-						"<tr><td>" + htmlPowerName + "</td></tr>" +
-						"<tr><td>" + htmlPowerText + "</td></tr>" +
-						"<tr><td>" + htmlPowerImage + "</td></tr>" +
+						"<tr><td colspan=\"2\">" + htmlButtonRefresh + "</td></tr>" +
+						"<tr>" + 
+							"<td width=\"50%\">" + htmlPowerName + "</td>" +
+							"<td width=\"50%\">" + htmlPlayer + "</td>" +
+						"</tr>" +
+						"<tr><td colspan=\"2\">" + htmlPowerText + "</td></tr>" +
+						"<tr><td colspan=\"2\">" + htmlPowerImage + "</td></tr>" +
 					"</table>";
 				
 				return table;
@@ -124,6 +192,11 @@
 			function getRandomPlayer(players)
 			{
 				return players[Math.floor(Math.random() * players.length)];
+			}
+			
+			function getRandomPower(powers)
+			{
+				return powers[Math.floor(Math.random() * powers.length)];
 			}
 			
 			function normalizeWeights(weights)
