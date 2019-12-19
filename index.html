@@ -12,15 +12,13 @@
 				display: block;
 				width: 100%;
 				height: 200px;
-				font-size: 64px;
+				font-size: 50px;
 			}
 			table {
 				width: 100%;
 			}
 			th, td {
 				text-align: center;
-				padding-top: 15px;
-				padding-bottom: 15px;
 			}
 			img {
 				padding: 0;
@@ -35,22 +33,16 @@
 		<script>
 			function randomize()
 			{
-				let weights = 
-				[
-					60,		// handicap
-					35,		// bonus
-					5,		// misc
-				];
+				//let weights = 
+				//[
+				//	60,		// handicap
+				//	35,		// bonus
+				//	5,		// misc
+				//];
+				let weights = getWeights();
 			
-				let players = 
-				[ 
-					"Player0", 
-					"Player1",
-					"Player2",
-					"Player3",
-					"Player4",
-					"Player5",
-				];
+				//let players = [ "Player0", "Player1", "Player2", "Player3", "Player4", "Player5", ];
+				let players = getPlayers();
 				
 				let handicaps =
 				[
@@ -172,6 +164,7 @@
 				let player = getRandomPlayer(players);				
 				let powerIcon = getPowerIcon(powerIndex);
 				
+				let htmlArgs = "<div style=\"font-size: 10px;color: #cccccc\">players=[" + players + "]&nbsp;weights=[" + weights + "]</div>";
 				let htmlPlayer = "<div style=\"font-size: 50px;font-weight: bold\">" + (powerIndex == 2 ? "" : player) + "</div>";
 				let htmlPowerName = "<div style=\"font-size: 50px;font-weight: bold\">" + powerIcon + "&nbsp;" + power.name + "</div>";
 				let htmlPowerText = "<div style=\"font-size: 40px\">" + power.text + "</div>";
@@ -180,12 +173,13 @@
 				
 				let table = 
 					"<table>" +
-						"<tr><td colspan=\"2\">" + htmlButtonRefresh + "</td></tr>" +
+						"<tr><td colspan=\"2\" style=\"padding: 0px;\">" + htmlArgs + "</td></tr>" +
+						"<tr><td colspan=\"2\" style=\"padding-bottom: 25px;\">" + htmlButtonRefresh + "</td></tr>" +
 						"<tr>" + 
-							"<td width=\"50%\">" + htmlPowerName + "</td>" +
-							(powerIndex == 2 ? "" : "<td width=\"50%\">" + htmlPlayer + "</td>") +
+							"<td width=\"50%\" style=\"padding-bottom: 50px;\">" + htmlPowerName + "</td>" +
+							(powerIndex == 2 ? "" : "<td width=\"50%\" style=\"padding-bottom: 50px;\">" + htmlPlayer + "</td>") +
 						"</tr>" +
-						"<tr><td colspan=\"2\">" + htmlPowerText + "</td></tr>" +
+						"<tr><td colspan=\"2\" style=\"padding-bottom: 50px;\">" + htmlPowerText + "</td></tr>" +
 						"<tr><td colspan=\"2\">" + htmlPowerImage + "</td></tr>" +
 					"</table>";
 				
@@ -248,6 +242,48 @@
 					rangeStarts  = rangeEnds;
 				}
 				return -1;
+			}
+			
+			function getArgs()
+			{
+				return window.location.search.substring(1).split('&');
+			}
+			
+			function startsWith(str, word)
+			{
+				return str.lastIndexOf(word, 0) === 0;
+			}
+			
+			function getPlayers()
+			{
+				var args = getArgs();
+				for (i = 0; i < args.length ; i++)
+				{
+					if (!startsWith(args[i], "players="))
+					{
+						continue;
+					}
+					return args[i].substr("players=".length).split(';').filter(function(el) { return el.length != 0 });
+				}
+				return [ "NO_PLAYERS" ];
+			}
+			
+			function getWeights()
+			{
+				var args = getArgs();
+				for (i = 0; i < args.length ; i++)
+				{
+					if (!startsWith(args[i], "weights="))
+					{
+						continue;
+					}
+					return args[i]
+						.substr("weights=".length)
+						.split(';')
+						.filter(function(el) { return el.length != 0; })
+						.map(function(item) { return parseFloat(item, 10); });
+				}
+				return [ 60.0, 35.0, 5.0 ];
 			}
 			
 			document.body.innerHTML = randomize();
