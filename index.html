@@ -33,6 +33,8 @@
 		<script>
 			function randomize()
 			{
+				console.clear();
+			
 				//let weights = 
 				//[
 				//	60,		// handicap
@@ -169,7 +171,8 @@
 				let htmlPowerName = "<div style=\"font-size: 50px;font-weight: bold\">" + powerIcon + "&nbsp;" + power.name + "</div>";
 				let htmlPowerText = "<div style=\"font-size: 40px\">" + power.text + "</div>";
 				let htmlPowerImage = "<div><img src=\"" + power.image + "\" /></div>";
-				let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"window.location.reload();\">Randomize</button>";
+				//let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"window.location.reload();\">Randomize</button>";
+				let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"randomize();\">Randomize</button>";
 				
 				let table = 
 					"<table>" +
@@ -183,7 +186,7 @@
 						"<tr><td colspan=\"2\">" + htmlPowerImage + "</td></tr>" +
 					"</table>";
 				
-				return table;
+				document.body.innerHTML = table;
 			}
 			
 			function getRandomPlayer(players)
@@ -244,9 +247,20 @@
 				return -1;
 			}
 			
+			function getArgsSeparators()
+			{
+				// [' ', '\\\+', '-', '\\\(', '\\\)', '\\*', '/', ':', '\\\?'];
+				return [ '\\\?', '\\\&' ];
+			}
+			
+			function split(str, separators)
+			{
+				return str.split(new RegExp(separators.join('|'), 'g')).filter(function(el) { return el.length != 0 });
+			}
+			
 			function getArgs()
 			{
-				return window.location.search.substring(1).split('&');
+				return split(window.location.search, getArgsSeparators());
 			}
 			
 			function startsWith(str, word)
@@ -263,7 +277,7 @@
 					{
 						continue;
 					}
-					return args[i].substr("players=".length).split(';').filter(function(el) { return el.length != 0 });
+					return split(args[i].substr("players=".length), [ ',', ';' ]);
 				}
 				return [ "NO_PLAYERS" ];
 			}
@@ -277,16 +291,13 @@
 					{
 						continue;
 					}
-					return args[i]
-						.substr("weights=".length)
-						.split(';')
-						.filter(function(el) { return el.length != 0; })
+					return split(args[i].substr("weights=".length), [ ',', ';' ])
 						.map(function(item) { return parseFloat(item, 10); });
 				}
 				return [ 60.0, 35.0, 5.0 ];
 			}
 			
-			document.body.innerHTML = randomize();
+			randomize();
 		</script>
 		<div id="main" />
 		<img id="image" />
