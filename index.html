@@ -34,8 +34,16 @@
 			function randomize()
 			{
 				console.clear();
-				
+			
+				//let weights = 
+				//[
+				//	60,		// handicap
+				//	35,		// bonus
+				//	5,		// misc
+				//];
 				let weights = getWeights();
+			
+				//let players = [ "Player0", "Player1", "Player2", "Player3", "Player4", "Player5", ];
 				let players = getPlayers();
 				
 				let handicaps =
@@ -142,6 +150,11 @@
 						"name" : "Nut&nbsp;Low", 
 						"text" : "Worst hand wins.", 
 						"image" : "misc_nut_low.jpg",
+					},
+					{ 
+						"name" : "Cap", 
+						"text" : "Everybody is capped X bb.", 
+						"image" : "misc_cap.jpg",
 					},
 				];
 				
