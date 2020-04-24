@@ -204,7 +204,7 @@
 				{
 					case 0: return "\&#9855;";
 					case 1: return "\&#128640;";
-					case 2: return "\&#65533;";
+					case 2: return "\&#127922;";
 					default: return "";
 				}
 			}
@@ -289,7 +289,7 @@
 					return split(args[i].substr("weights=".length), [ ',', ';' ])
 						.map(function(item) { return parseFloat(item, 10); });
 				}
-				return [ 60.0, 35.0, 5.0 ];
+				return [ 55.0, 25.0, 20.0 ];
 			}
 			
 			randomize();
