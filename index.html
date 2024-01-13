@@ -1,310 +1,392 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>Poker Home Game SPECIAL</title>
-		<style>
-			body {
-				background-color: #cccccc;
-				font-family: "Verdana", Times, serif;
-			}
-			#buttonRefresh {
-				display: block;
-				width: 100%;
-				height: 200px;
-				font-size: 50px;
-			}
-			table {
-				width: 100%;
-			}
-			th, td {
-				text-align: center;
-			}
-			img {
-				padding: 0;
-				display: block;
-				margin: 0 auto;
-				max-height: 100%;
-				max-width: 100%;
-			}
-		</style>
-	</head>
-	<body>
-		<script>
-			function randomize()
-			{
-				console.clear();
-			
-				//let weights = 
-				//[
-				//	60,		// handicap
-				//	35,		// bonus
-				//	5,		// misc
-				//];
-				let weights = getWeights();
-			
-				//let players = [ "Player0", "Player1", "Player2", "Player3", "Player4", "Player5", ];
-				let players = getPlayers();
-				
-				let handicaps =
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Poker Home Game SPECIAL</title>
+	<style>
+		body {
+			background-color: #cccccc;
+			font-family: "Verdana", Times, serif;
+		}
+
+		#buttonRefresh {
+			display: block;
+			width: 100%;
+			height: 200px;
+			font-size: 50px;
+		}
+
+		table {
+			width: 100%;
+		}
+
+		th,
+		td {
+			text-align: center;
+		}
+
+		img {
+			padding: 0;
+			display: block;
+			margin: 0 auto;
+			max-height: 100%;
+			max-width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		function randomize() {
+			console.clear();
+
+			//let weights = 
+			//[
+			//	55,		// handicap
+			//	25,		// bonus
+			//	20,		// misc
+			//];
+			let weights = getWeights();
+
+			//let players = [ "Player0", "Player1", "Player2", "Player3", "Player4", "Player5", ];
+			let players = getPlayers();
+
+			let handicaps =
 				[
-					{ 
-						"name" : "Call&nbsp;Station", 
-						"text" : "Hero can only fold, check or call.", 
-						"image" : "images/handicap_call_station.jpg",
+					// version 1
+
+					{
+						"name": "Call Station",
+						"text": "Hero can only fold, check or call.",
+						"image": "images/handicap_call_station.jpg",
 					},
-					{ 
-						"name" : "Slut", 
-						"text" : "Hero plays with one card face up.", 
-						"image" : "images/handicap_slut.jpg",
-					},
-					{ 
-						"name" : "Pirate", 
-						"text" : "Hero cannot look at one of his or her cards (until river).", 
-						"image" : "images/handicap_pirate.jpg",
-					},
-					{ 
-						"name" : "Philanthropy", 
-						"text" : "Hero donates X bb to pot.", 
-						"image" : "images/handicap_philanthropy.jpg",
-					},
-					{ 
-						"name" : "Cargo&nbsp;Ship", 
-						"text" : "Hero must go dark all-in (cap X bb).", 
-						"image" : "images/handicap_cargo_ship.jpg",
-					},
-					{ 
-						"name" : "Gambler", 
-						"text" : "Hero must (re)straddle bet. If not possible, hero posts equal amount.", 
-						"image" : "images/handicap_gambler.jpg",
-					},
-					{ 
-						"name" : "Minesweeper", 
-						"text" : "Every street hero rolls a dice, if 1 is rolled - he or she folds.", 
-						"image" : "images/handicap_minesweeper.jpg",
-					},
-					{ 
-						"name" : "Flash", 
-						"text" : "Hero only has X seconds to act.", 
-						"image" : "images/handicap_flash.jpg",
-					},
-				];
-				
-				let bonuses =
-				[
-					{ 
-						"name" : "Deja&nbsp;Vu", 
-						"text" : "Hero can ask to re-deal one street (flop, turn or river).", 
-						"image" : "images/bonus_deja_vu.jpg",
-					},
-					{ 
-						"name" : "Research", 
-						"text" : "At the beginning of the hand hero can ask to re-deal one pocket card (discarded card is shown).", 
-						"image" : "images/bonus_research.jpg",
-					},
-					{ 
-						"name" : "Mulligan", 
-						"text" : "At the beginning of hero's action he or she can ask to be dealt a new hand (discarded hand is shown).", 
-						"image" : "images/bonus_mulligan.jpg",
-					},
-					{ 
-						"name" : "Marathon", 
-						"text" : "Hero can ask to play 6th street (new card + new betting round).", 
-						"image" : "images/bonus_marathon.jpg",
-					},
-					{ 
-						"name" : "Tax", 
-						"text" : "Each opponent donates X bb to pot.", 
-						"image" : "images/bonus_tax.jpg",
-					},
-					{ 
-						"name" : "Button", 
-						"text" : "Hero always last to act (each street action starts from the player after hero).", 
-						"image" : "images/bonus_button.jpg",
-					},
-					{ 
-						"name" : "Dealer's&nbsp;Choice", 
-						"text" : "Hero chooses game (texas, omaha, crazy pineapple, shortdeck, razz, 5 card draw, etc.)", 
-						"image" : "images/bonus_dealers_choice.jpg",
+					// {
+					// 	"name" : "Slut", 
+					// 	"text" : "Hero plays with one card face up.", 
+					// 	"image" : "images/handicap_slut.jpg",
+					// },
+					{
+						"name": "Pirate",
+						"text": "Hero cannot look at one of his or her cards (until river).",
+						"image": "images/handicap_pirate.jpg",
 					},
 					{
-						"name" : "Merge&nbsp;Conflict",
-						"text" : "At the start of each street, hero can swap one of his cards for any of the cards that were just dealt. (once per hand)",
-						"image" : "images/bonus_conflict.jpg"
-					}
+						"name": "Philanthropy",
+						"text": "Hero donates X bb to pot.",
+						"image": "images/handicap_philanthropy.jpg",
+					},
+					{
+						"name": "Cargo Ship",
+						"text": "Hero must go dark all-in (cap X bb).",
+						"image": "images/handicap_cargo_ship.jpg",
+					},
+					// {
+					// 	"name" : "Gambler", 
+					// 	"text" : "Hero must (re)straddle bet. If not possible, hero posts equal amount.", 
+					// 	"image" : "images/handicap_gambler.jpg",
+					// },
+					// {
+					// 	"name" : "Minesweeper", 
+					// 	"text" : "Every street hero rolls a dice, if 1 is rolled - he or she folds.", 
+					// 	"image" : "images/handicap_minesweeper.jpg",
+					// },
+					{
+						"name": "Flash",
+						"text": "Hero only has X seconds to act.",
+						"image": "images/handicap_flash.jpg",
+					},
+
+					// version 2
+
+					{
+						"name": "My Precious",
+						"text": "Hero is being dealt AA face up and becomes a call station (can only fold, check or call).",
+						"image": "images/handicap_my_precious.jpg",
+					},
+					{
+						"name": "Jester Box",
+						"text": "If hero wants to bet or raise, he or she rolls a 6-sided dice and the result determines the sizing (% of the pot rounded up): 1 = 25%, 2 = 50%, 3 = 75%, 4 = 100%, 5 = 150%, 6 = 200%.",
+						"image": "images/handicap_jester_box.jpg",
+					},
 				];
-				
-				let miscs =
+
+			let bonuses =
 				[
-					{ 
-						"name" : "Bomb&nbsp;Pot", 
-						"text" : "Everybody donates X bb to pot. Deal flop. Play!", 
-						"image" : "images/misc_bomb_pot.jpg",
+					// version 1
+
+					{
+						"name": "Deja Vu",
+						"text": "Hero can ask to re-deal one street (flop, turn or river).",
+						"image": "images/bonus_deja_vu.jpg",
 					},
-					{ 
-						"name" : "Big&nbsp;Mac", 
-						"text" : "Play two boards. Each board pays half the pot.", 
-						"image" : "images/misc_big_mac.jpg",
+					{
+						"name": "Research",
+						"text": "At the beginning of the hand hero can ask to re-deal one pocket card (discarded card is shown).",
+						"image": "images/bonus_research.jpg",
 					},
-					{ 
-						"name" : "Nut&nbsp;Low", 
-						"text" : "The worst hand wins (both cards play).",
-						"image" : "images/misc_nut_low.jpg",
+					{
+						"name": "Mulligan",
+						"text": "At the beginning of hero's action he or she can ask to be dealt a new hand (discarded hand is shown). Can be used once.",
+						"image": "images/bonus_mulligan.jpg",
 					},
-					{ 
-						"name" : "Cap", 
-						"text" : "Everybody is capped X bb.", 
-						"image" : "images/misc_cap.jpg",
+					{
+						"name": "Marathon",
+						"text": "Hero can ask to play 6th street (new card + new betting round).",
+						"image": "images/bonus_marathon.jpg",
+					},
+					{
+						"name": "Tax",
+						"text": "Each opponent donates X bb to pot.",
+						"image": "images/bonus_tax.jpg",
+					},
+					{
+						"name": "Button",
+						"text": "Hero always last to act (each street action starts from the player after hero).",
+						"image": "images/bonus_button.jpg",
+					},
+					{
+						"name": "Dealer's Choice",
+						"text": "Hero chooses game (texas, omaha, crazy pineapple, shortdeck, razz, 5 card draw, etc.)",
+						"image": "images/bonus_dealers_choice.jpg",
+					},
+					// {
+					// 	"name" : "Merge Conflict",
+					// 	"text" : "At the start of each street, hero can swap one of his cards for any of the cards that were just dealt. (once per hand)",
+					// 	"image" : "images/bonus_conflict.jpg"
+					// }
+
+					// version 2
+
+					{
+						"name": "Escort",
+						"text": "Before dealing hands, hero can ask to be dealt any one specific card (hero plays with it open face for the rest of the hand).",
+						"image": "images/bonus_escort.jpg",
+					},
+					{
+						"name": "Sonic",
+						"text": "At the end of the hero's action (if he or she closes the action), hero can pay half of the pot (rounded up) and fast forward hand to the showdown (missing steets are dealt).",
+						"image": "images/bonus_sonic.jpg",
+					},
+					{
+						"name": "Strip Dance",
+						"text": "On the flop or the turn (before any action) hero can open one of his cards face up to skip the betting round and go to the next street. (This can be used twice per hand, leaving hero with both cards face up).",
+						"image": "images/bonus_strip_dance.jpg",
+					},
+					{
+						"name": "Blackjack 'Hit Me!'",
+						"text": "At the beginning of each street (except preflop) hero can pay half of the pot (rounded up) to recycle any one card in his hand (discarded card is shown).",
+						"image": "images/bonus_blackjack_hit_me.jpg",
+					},
+					{
+						"name": "Nostradamus",
+						"text": "At the beginning of the hero's action during the flop or turn, he or she can can pay half of the pot (rounded up) to peek at the next street's card.",
+						"image": "images/bonus_nostradamus.jpg",
+					},
+					{
+						"name": "First Aid",
+						"text": "If hero looses all-in and busts this hand, every player contributes to make 50% of min buy-in for his or her next buy-in.",
+						"image": "images/bonus_first_aid.jpg",
 					},
 				];
-				
-				let powersByGroup = 
+
+			let miscs =
 				[
-					handicaps, 
+					// version 1
+
+					{
+						"name": "Bomb Pot",
+						"text": "Everybody donates X bb to pot. Deal flop. Play!",
+						"image": "images/misc_bomb_pot.jpg",
+					},
+					{
+						"name": "Big Mac",
+						"text": "Play two boards. Each board pays half the pot.",
+						"image": "images/misc_big_mac.jpg",
+					},
+					{
+						"name": "Nut Low",
+						"text": "The worst hand wins (both cards play).",
+						"image": "images/misc_nut_low.jpg",
+					},
+					// { 
+					// 	"name" : "Cap", 
+					// 	"text" : "Everybody is capped X bb.", 
+					// 	"image" : "images/misc_cap.jpg",
+					// },
+
+					// version 2
+
+					{
+						"name": "Red Lights District",
+						"text": "Everyone is dealt one card face up.",
+						"image": "images/misc_red_lights_district.jpg",
+					},
+					{
+						"name": "Potter",
+						"text": "Forced pot limit: every bet or raise has to be pot size.",
+						"image": "images/misc_potter.jpg",
+					},
+					{
+						"name": "X-Files",
+						"text": "The river card is dealt face down until the showdown.",
+						"image": "images/misc_x_files.jpg",
+					},
+					{
+						"name": "New York Exchange",
+						"text": "After each street is dealt, an auction begins for the street re-deal. Anyone can bid for/against the re-deal. The winner pays to the pot and the street is either kept or re-dealt (if no bids, current street stays).",
+						"image": "images/misc_new_york_exchange.jpg",
+					},
+					{
+						"name": "Roulette",
+						"text": "Before dealing each street, players in the hand (in order by their position) guess the next card's color: red of black. Wrong guess pays 25% of the pot rounded up. (Since flop has 3 cards: count the dominant color).",
+						"image": "images/misc_roulette.jpg",
+					},
+					{
+						"name": "Future Investment",
+						"text": "25% of the pot (rounded up) goes to the next hand.",
+						"image": "images/misc_future_investment.jpg",
+					},
+					{
+						"name": "Flip",
+						"text": "Everybody goes dark all-in (cap 20bb).",
+						"image": "images/misc_flip.jpg",
+					},
+					{
+						"name": "Reverse",
+						"text": "River is dealt first, then turn, then flop.",
+						"image": "images/misc_reverse.jpg",
+					},
+				];
+
+			let powersByGroup =
+				[
+					handicaps,
 					bonuses,
 					miscs,
 				];
-				
-				let powerIndex = getRandomPowerIndex(weights, powersByGroup);
-				let powers = powersByGroup[powerIndex];
-				let power = getRandomPower(powers);
-				let player = getRandomPlayer(players);				
-				let powerIcon = getPowerIcon(powerIndex);
-				
-				let htmlArgs = "<div style=\"font-size: 10px;color: #cccccc\">players=[" + players + "]&nbsp;weights=[" + weights + "]</div>";
-				let htmlPlayer = "<div style=\"font-size: 50px;font-weight: bold\">" + (powerIndex == 2 ? "" : player) + "</div>";
-				let htmlPowerName = "<div style=\"font-size: 50px;font-weight: bold\">" + powerIcon + "&nbsp;" + power.name + "</div>";
-				let htmlPowerText = "<div style=\"font-size: 40px\">" + power.text + "</div>";
-				let htmlPowerImage = "<div><img src=\"" + power.image + "\" /></div>";
-				//let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"window.location.reload();\">Randomize</button>";
-				let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"randomize();\">Randomize</button>";
-				
-				let table = 
-					"<table>" +
-						"<tr><td colspan=\"2\" style=\"padding: 0px;\">" + htmlArgs + "</td></tr>" +
-						"<tr><td colspan=\"2\" style=\"padding-bottom: 25px;\">" + htmlButtonRefresh + "</td></tr>" +
-						"<tr>" + 
-							"<td width=\"50%\" style=\"padding-bottom: 50px;\">" + htmlPowerName + "</td>" +
-							(powerIndex == 2 ? "" : "<td width=\"50%\" style=\"padding-bottom: 50px;\">" + htmlPlayer + "</td>") +
-						"</tr>" +
-						"<tr><td colspan=\"2\" style=\"padding-bottom: 50px;\">" + htmlPowerText + "</td></tr>" +
-						"<tr><td colspan=\"2\">" + htmlPowerImage + "</td></tr>" +
-					"</table>";
-				
-				document.body.innerHTML = table;
+
+			let powerIndex = getRandomPowerIndex(weights, powersByGroup);
+			let powers = powersByGroup[powerIndex];
+			let power = getRandomPower(powers);
+			let player = getRandomPlayer(players);
+			let powerIcon = getPowerIcon(powerIndex);
+
+			let htmlArgs = "<div style=\"font-size: 10px;color: #cccccc\">players=[" + players + "]&nbsp;weights=[" + weights + "]</div>";
+			let htmlPlayer = "<div style=\"font-size: 50px;font-weight: bold\">" + (powerIndex == 2 ? "" : player) + "</div>";
+			let htmlPowerName = "<div style=\"font-size: 50px;font-weight: bold\">" + powerIcon + "&nbsp;" + power.name.replaceAll(" ", "&nbsp;") + "</div>";
+			let htmlPowerText = "<div style=\"font-size: 40px\">" + power.text + "</div>";
+			let htmlPowerImage = "<div><img src=\"" + power.image + "\" /></div>";
+			//let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"window.location.reload();\">Randomize</button>";
+			let htmlButtonRefresh = "<button id=\"buttonRefresh\" onClick=\"randomize();\">Randomize</button>";
+
+			let table =
+				"<table>" +
+				"<tr><td colspan=\"2\" style=\"padding: 0px;\">" + htmlArgs + "</td></tr>" +
+				"<tr><td colspan=\"2\" style=\"padding-bottom: 25px;\">" + htmlButtonRefresh + "</td></tr>" +
+				"<tr>" +
+				"<td width=\"50%\" style=\"padding-bottom: 50px;\">" + htmlPowerName + "</td>" +
+				(powerIndex == 2 ? "" : "<td width=\"50%\" style=\"padding-bottom: 50px;\">" + htmlPlayer + "</td>") +
+				"</tr>" +
+				"<tr><td colspan=\"2\" style=\"padding-bottom: 50px;\">" + htmlPowerText + "</td></tr>" +
+				"<tr><td colspan=\"2\">" + htmlPowerImage + "</td></tr>" +
+				"</table>";
+
+			document.body.innerHTML = table;
+		}
+
+		function getRandomPlayer(players) {
+			let value = Math.random();
+			console.log("randomized for player: " + value);
+			return players[Math.floor(value * players.length)];
+		}
+
+		function getRandomPower(powers) {
+			let value = Math.random();
+			console.log("randomized for power: " + value);
+			return powers[Math.floor(value * powers.length)];
+		}
+
+		function getPowerIcon(powerIndex) {
+			switch (powerIndex) {
+				case 0: return "\&#9855;";
+				case 1: return "\&#128640;";
+				case 2: return "\&#127922;";
+				default: return "";
 			}
-			
-			function getRandomPlayer(players)
-			{
-				let value = Math.random();
-				console.log("randomized for player: " + value);
-				return players[Math.floor(value * players.length)];
+		}
+
+		function normalizeWeights(weights) {
+			let weightsSum = 0;
+			for (i = 0; i < weights.length; i++) {
+				weightsSum += weights[i];
 			}
-			
-			function getRandomPower(powers)
-			{
-				let value = Math.random();
-				console.log("randomized for power: " + value);
-				return powers[Math.floor(value * powers.length)];
+			let weightsNormalized = new Array(weights.length);
+			for (i = 0; i < weights.length; i++) {
+				weightsNormalized[i] = weights[i] / weightsSum;
 			}
-			
-			function getPowerIcon(powerIndex)
-			{
-				switch (powerIndex)
-				{
-					case 0: return "\&#9855;";
-					case 1: return "\&#128640;";
-					case 2: return "\&#127922;";
-					default: return "";
+			return weightsNormalized;
+		}
+
+		function getRandomPowerIndex(weights, powersByGroup) {
+			let weightsNormalized = normalizeWeights(weights);
+			let value = Math.random();
+			console.log("randomized for power type: " + value);
+			let rangeStarts = 0;
+			for (i = 0; i < weightsNormalized.length; i++) {
+				let rangeEnds = rangeStarts + weightsNormalized[i];
+				if (value >= rangeStarts && value < rangeEnds) {
+					return i;
 				}
+				rangeStarts = rangeEnds;
 			}
-			
-			function normalizeWeights(weights)
-			{
-				let weightsSum = 0;
-				for (i = 0; i < weights.length ; i++)
-				{
-					weightsSum += weights[i];
+			return -1;
+		}
+
+		function getArgsSeparators() {
+			// [' ', '\\\+', '-', '\\\(', '\\\)', '\\*', '/', ':', '\\\?'];
+			return ['\\\?', '\\\&'];
+		}
+
+		function split(str, separators) {
+			return str.split(new RegExp(separators.join('|'), 'g')).filter(function (el) { return el.length != 0 });
+		}
+
+		function getArgs() {
+			return split(window.location.search, getArgsSeparators());
+		}
+
+		function startsWith(str, word) {
+			return str.lastIndexOf(word, 0) === 0;
+		}
+
+		function getPlayers() {
+			var args = getArgs();
+			for (i = 0; i < args.length; i++) {
+				if (!startsWith(args[i], "players=")) {
+					continue;
 				}
-				let weightsNormalized = new Array(weights.length);
-				for (i = 0; i < weights.length ; i++)
-				{
-					weightsNormalized[i] = weights[i] / weightsSum;
+				return split(args[i].substr("players=".length), [',', ';']);
+			}
+			return ["NO_PLAYERS"];
+		}
+
+		function getWeights() {
+			var args = getArgs();
+			for (i = 0; i < args.length; i++) {
+				if (!startsWith(args[i], "weights=")) {
+					continue;
 				}
-				return weightsNormalized;
+				return split(args[i].substr("weights=".length), [',', ';'])
+					.map(function (item) { return parseFloat(item, 10); });
 			}
-			
-			function getRandomPowerIndex(weights, powersByGroup)
-			{
-				let weightsNormalized = normalizeWeights(weights);
-				let value = Math.random();
-				console.log("randomized for power type: " + value);
-				let rangeStarts = 0;
-				for (i = 0; i < weightsNormalized.length ; i++)
-				{
-					let rangeEnds = rangeStarts + weightsNormalized[i];
-					if (value >= rangeStarts && value < rangeEnds)
-					{
-						return i;
-					}
-					rangeStarts  = rangeEnds;
-				}
-				return -1;
-			}
-			
-			function getArgsSeparators()
-			{
-				// [' ', '\\\+', '-', '\\\(', '\\\)', '\\*', '/', ':', '\\\?'];
-				return [ '\\\?', '\\\&' ];
-			}
-			
-			function split(str, separators)
-			{
-				return str.split(new RegExp(separators.join('|'), 'g')).filter(function(el) { return el.length != 0 });
-			}
-			
-			function getArgs()
-			{
-				return split(window.location.search, getArgsSeparators());
-			}
-			
-			function startsWith(str, word)
-			{
-				return str.lastIndexOf(word, 0) === 0;
-			}
-			
-			function getPlayers()
-			{
-				var args = getArgs();
-				for (i = 0; i < args.length ; i++)
-				{
-					if (!startsWith(args[i], "players="))
-					{
-						continue;
-					}
-					return split(args[i].substr("players=".length), [ ',', ';' ]);
-				}
-				return [ "NO_PLAYERS" ];
-			}
-			
-			function getWeights()
-			{
-				var args = getArgs();
-				for (i = 0; i < args.length ; i++)
-				{
-					if (!startsWith(args[i], "weights="))
-					{
-						continue;
-					}
-					return split(args[i].substr("weights=".length), [ ',', ';' ])
-						.map(function(item) { return parseFloat(item, 10); });
-				}
-				return [ 55.0, 25.0, 20.0 ];
-			}
-			
-			randomize();
-		</script>
-		<div id="main" />
-		<img id="image" />
-	</body>
+			return [55.0, 25.0, 20.0];
+		}
+
+		randomize();
+	</script>
+	<div id="main" />
+	<img id="image" />
+</body>
+
 </html>
